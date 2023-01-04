@@ -9,3 +9,7 @@ fs.writeFile('./file.js', content, 'utf8', (err) => {
   }
   return console.log('写入文件成功');
 });
+
+// 注意点：
+// writeFile 只能创建文件，不能创建目录
+// 重复调用 writeFile 写入同一个文件，新内容会覆盖旧内容
