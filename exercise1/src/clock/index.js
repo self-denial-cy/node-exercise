@@ -33,7 +33,7 @@ const resolveCss = (htmlStr) => {
 const resolveJs = (htmlStr) => {
   const r2 = regScript.exec(htmlStr);
   if (r2) {
-    const jsStr = '/* eslint-disable */\r\n' + r2[0].replace('<script>', '').replace('</script>', '');
+    const jsStr = '/* eslint-disable */\n' + r2[0].replace('<script>', '').replace('</script>', '');
     fs.writeFile(path.join(__dirname, './clock.js'), jsStr, 'utf8', (err) => {
       if (err) return console.log(`文件写入失败：${err.message}`);
       console.log('clock.js 文件写入成功');

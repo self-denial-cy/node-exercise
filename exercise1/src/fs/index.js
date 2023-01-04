@@ -4,11 +4,11 @@ fs.readFile('./score.txt', 'utf8', (err, res) => {
   if (err) {
     return console.log(`读取文件失败：${err.message}`);
   }
-  const contentStr = res.replace(/\r\n/g, ' ').trim();
+  const contentStr = res.replace(/\n/g, ' ').trim();
   const contentArr = contentStr.split(' ').map((str) => {
     return str.replace(/=/g, '：');
   });
-  const generatedContent = contentArr.join('\r\n') + '\r\n';
+  const generatedContent = contentArr.join('\n') + '\n';
   fs.writeFile('./score-ok.txt', generatedContent, 'utf8', (err) => {
     if (err) {
       return console.log(`文件写入失败：${err.message}`);
