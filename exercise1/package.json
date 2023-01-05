@@ -8,5 +8,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
