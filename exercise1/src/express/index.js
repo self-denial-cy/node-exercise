@@ -1,5 +1,10 @@
 // 导入 express
+const e = require('express');
 const express = require('express');
+// NodeJs 内置了 querystring 模块，专门用来处理查询字符串
+// 通过该模块的 parse 函数，可以轻松的将查询字符串解析成对象格式
+// 或者也可以使用第三方模块 qs，功能差不多，也挺好的
+const qs = require('querystring');
 const apiRouter = require('./api');
 const mw = require('./middleware');
 
@@ -10,16 +15,38 @@ const app = express();
 // 默认情况下，如果不配置该中间件，req.body 等于 undefined
 app.use(express.json());
 // 配置解析 application/x-www-form-urlencoded 格式请求体数据的内置中间件
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 
 // 当一个请求到达服务器时，可以连续调用多个中间件，从而对这次请求进行预处理
 // 中间件对输入处理后再输出，上一个中间件的输出往往是下一个中间件的输入
 // 多个中间件共享同一份 req 和 res，基于该特性，可以在上游中间件中，为 req 或 res 对象添加自定义的属性或方法，供下游中间件或路由进行使用
 app.use(mw);
 
+// 自定义中间件【简单仿写 express.urlencoded 功能】
 app.use((req, res, next) => {
-  console.log('this is next middleware');
-  next();
+  if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+    // 监听 req 的 data 事件：用于获取客户端发送到服务器的【请求体】数据
+    // 如果数据量较大，无法一次性发送完毕，则客户端会把数据切割后，分批发送到服务器；
+    // 所以 data 事件可能会触发多次，每一次获取到一部分数据，最后需要手动拼接数据
+    let dataStr = '';
+    req.on('data', (chunk) => {
+      console.log(chunk);
+      dataStr += chunk;
+    });
+    // 当【请求体】数据接收完毕后，会自动触发 req 的 end 事件
+    // 因此，可以在 end 事件中拿到并处理完整的【请求体】数据
+    req.on('end', () => {
+      console.log(dataStr);
+      // The object returned by the querystring.parse() method _does not_prototypically inherit from the JavaScript Object.
+      // This means that typicalObject methods such as obj.toString(), obj.hasOwnProperty(), and others are not defined and will not work.
+      const body = qs.parse(dataStr);
+      console.log(body);
+      req.body = body;
+      next();
+    });
+  } else {
+    next();
+  }
 });
 
 // app.use 用于注册全局中间件
@@ -75,7 +102,7 @@ const mw2 = (req, res, next) => {
 app.post('/user', [mw1, mw2], (req, res) => {
   console.log(req.body);
   // 响应文本字符串
-  res.send('POST 请求成功');
+  res.send(req.body);
 });
 
 app.get('/error', (req, res) => {
