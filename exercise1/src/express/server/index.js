@@ -1,5 +1,6 @@
 const express = require('express');
 const router = require('./router');
+const jsonp = require('./jsonp');
 // cors 是 express 的一个第三方中间件，通过安装和配置该中间件，可以很方便的解决跨域问题
 // 该中间件必须在接口之前使用
 const cors = require('cors');
@@ -37,9 +38,12 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(jsonp);
+
+app.use(cors());
 
 app.use(router);
 
