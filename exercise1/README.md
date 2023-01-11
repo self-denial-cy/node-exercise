@@ -71,3 +71,25 @@ Cookie 受同源策略限制【官方说明】，但是在浏览器实际实现�
 ### Session 的工作原理
 
 ![Session 的工作原理](./images/session.png)
+
+## JWT 身份认证机制【适用于前后端分离开发模式】
+
+### 了解 Session 认证的局限性
+
+Session 认证机制需要基于 Cookie 才能实现
+
+由于 Cookie 默认不支持跨域访问，所以，当涉及到前端跨域请求后端接口的时候，需要做很多额外的配置，才能实现跨域 Session 认证
+
+### 什么是 JWT
+
+JWT【JSON Web Token】是目前最流行的跨域认证解决方案
+
+### JWT 的工作原理
+
+![JWT 的工作原理](./images/jwt.png)
+
+### JWT 的组成部分
+
+JWT 的组成部分：Header.Payload.Signature
+
+其中，Payload 部分才是真正的用户信息，它是用户信息加密之后生成的字符串；Header 和 Signature 是安全性相关的部分，只是为了保证 Token 的安全性
