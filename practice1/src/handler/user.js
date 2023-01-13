@@ -1,10 +1,10 @@
-const db = require('../../db/index');
+const db = require('../db/index');
 // 对密码进行加密后，无法逆向解密
 // 同一明文密码多次加密后的结果不相同，安全性更高
 const bcrypt = require('bcryptjs');
 
 // 用户注册接口 handler
-exports.register = (req, res) => {
+exports.registerHandler = (req, res) => {
   const userInfo = req.body;
   // 非空判断
   if (!userInfo.userNo || !userInfo.password) {
@@ -36,6 +36,6 @@ exports.register = (req, res) => {
 };
 
 // 用户登录接口 handler
-exports.login = (req, res) => {
+exports.loginHandler = (req, res) => {
   res.send('登录成功');
 };
