@@ -7,9 +7,9 @@ const bcrypt = require('bcryptjs');
 exports.registerHandler = (req, res) => {
   const userInfo = req.body;
   // 非空判断
-  if (!userInfo.userNo || !userInfo.password) {
-    return res.send({ ret: 0, msg: '用户名或密码不能为空' });
-  }
+  // if (!userInfo.userNo || !userInfo.password) {
+  //   return res.send({ ret: 0, msg: '用户名或密码不能为空' });
+  // }
   let sqlStr = 'select * from ev_users where user_no=?';
   db.query(sqlStr, userInfo.userNo, (err, results) => {
     if (err) {
