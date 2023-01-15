@@ -1,7 +1,7 @@
 const express = require('express');
 const { registerHandler, loginHandler } = require('../handler/user');
 const validate = require('../middleware/validate');
-const { registerSchema } = require('../schema/user');
+const { registerSchema, loginSchema } = require('../schema/user');
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.post('/register', validate(registerSchema), registerHandler);
 
 // 用户登录
-router.post('/login', loginHandler);
+router.post('/login', validate(loginSchema), loginHandler);
 
 module.exports = router;
