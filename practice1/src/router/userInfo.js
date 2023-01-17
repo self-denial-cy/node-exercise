@@ -1,7 +1,7 @@
 const express = require('express');
-const { getUserInfoHandler, updateUserInfoHandler } = require('../handler/userInfo');
+const { getUserInfoHandler, updateUserInfoHandler, updatePwdHandler } = require('../handler/userInfo');
 const validate = require('../middleware/validate');
-const { updateUserInfoSchema } = require('../schema/userInfo');
+const { updateUserInfoSchema, updatePwdSchema } = require('../schema/userInfo');
 
 const router = express.Router();
 
@@ -10,5 +10,8 @@ router.get('/getUserInfo', getUserInfoHandler);
 
 // 更新用户信息
 router.post('/updateUserInfo', validate(updateUserInfoSchema), updateUserInfoHandler);
+
+// 更新登录密码
+router.post('/updatePwd', validate(updatePwdSchema), updatePwdHandler);
 
 module.exports = router;
