@@ -5,6 +5,7 @@ const { expressjwt } = require('express-jwt');
 const { secretKey } = require('./config/index');
 const userRouter = require('./router/user');
 const userInfoRouter = require('./router/userInfo');
+const articleRouter = require('./router/article');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(expressjwt({ secret: secretKey, algorithms: ['HS256'] }).unless({ path: 
 
 app.use('/api', userRouter);
 app.use('/my', userInfoRouter);
+app.use('/article', articleRouter);
 
 // 全局错误捕获
 app.use((err, req, res, next) => {
