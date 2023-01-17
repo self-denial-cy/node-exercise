@@ -63,3 +63,19 @@ exports.updatePwdHandler = (req, res) => {
     });
   });
 };
+
+// 更新头像
+exports.updateAvatarHandler = (req, res) => {
+  const body = req.body;
+  const auth = req.auth;
+  const sqlStr = 'update ev_users set avatar=? where id=?';
+  db.query(sqlStr, [body.avatar, auth.id], (err, result) => {
+    if (err) {
+      return res.send({ ret: 0, msg: err.message });
+    }
+    if (result.affectedRows !== 1) {
+      return res.send({ ret: 0, msg: '修改失败' });
+    }
+    res.send({ ret: 1, msg: '修改成功' });
+  });
+};

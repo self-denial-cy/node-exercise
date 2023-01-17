@@ -14,3 +14,9 @@ exports.updatePwdSchema = {
     newPwd: Joi.not(Joi.ref('oldPwd')).concat(Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required())
   }
 };
+
+exports.updateAvatarSchema = {
+  body: {
+    avatar: Joi.string().dataUri().required()
+  }
+};
