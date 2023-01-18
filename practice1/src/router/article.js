@@ -3,9 +3,10 @@ const validate = require('../middleware/validate');
 const {
   getArticleCategoryListHandler,
   addArticleCategoryHandler,
-  delArticleCategoryHandler
+  delArticleCategoryHandler,
+  getArticleCategoryHandler
 } = require('../handler/article');
-const { addArticleCategorySchema, delArticleCategorySchema } = require('../schema/article');
+const { addArticleCategorySchema, delArticleCategorySchema, getArticleCategorySchema } = require('../schema/article');
 
 const router = express.Router();
 
@@ -17,5 +18,8 @@ router.post('/category/add', validate(addArticleCategorySchema), addArticleCateg
 
 // 删除文章分类
 router.get('/category/del/:id', validate(delArticleCategorySchema), delArticleCategoryHandler);
+
+// 获取单个文章分类详情
+router.get('/category/get/:id', validate(getArticleCategorySchema), getArticleCategoryHandler);
 
 module.exports = router;

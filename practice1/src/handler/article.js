@@ -50,3 +50,19 @@ exports.delArticleCategoryHandler = (req, res) => {
     res.send({ ret: 1, msg: '删除成功' });
   });
 };
+
+// 获取单个文章分类详情
+exports.getArticleCategoryHandler = (req, res) => {
+  const params = req.params;
+  const sqlStr = 'select id, name, alias from ev_article_category where id = ?';
+  db.query(sqlStr, params.id, (err, results) => {
+    if (err) {
+      return res.send({ ret: 0, msg: err.message });
+    }
+    if (!results.length) {
+      return res.send({ ret: 0, msg: '查询失败，请稍后再试' });
+    }
+    const firstRow = results[0];
+    res.send({ ret: 1, msg: '查询成功', data: firstRow });
+  });
+};

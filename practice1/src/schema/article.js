@@ -12,3 +12,9 @@ exports.delArticleCategorySchema = {
     id: Joi.number().integer().min(1).required()
   }
 };
+
+exports.getArticleCategorySchema = {
+  params: {
+    id: Joi.number().integer().min(1).required()
+  }
+};
