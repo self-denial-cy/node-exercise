@@ -4,9 +4,15 @@ const {
   getArticleCategoryListHandler,
   addArticleCategoryHandler,
   delArticleCategoryHandler,
-  getArticleCategoryHandler
+  getArticleCategoryHandler,
+  updateArticleCategoryHandler
 } = require('../handler/article');
-const { addArticleCategorySchema, delArticleCategorySchema, getArticleCategorySchema } = require('../schema/article');
+const {
+  addArticleCategorySchema,
+  delArticleCategorySchema,
+  getArticleCategorySchema,
+  updateArticleCategorySchema
+} = require('../schema/article');
 
 const router = express.Router();
 
@@ -21,5 +27,8 @@ router.get('/category/del/:id', validate(delArticleCategorySchema), delArticleCa
 
 // 获取单个文章分类详情
 router.get('/category/get/:id', validate(getArticleCategorySchema), getArticleCategoryHandler);
+
+// 修改单个文章分类
+router.post('/category/update', validate(updateArticleCategorySchema), updateArticleCategoryHandler);
 
 module.exports = router;

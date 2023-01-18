@@ -18,3 +18,11 @@ exports.getArticleCategorySchema = {
     id: Joi.number().integer().min(1).required()
   }
 };
+
+exports.updateArticleCategorySchema = {
+  body: {
+    id: Joi.number().integer().min(1).required(),
+    name: Joi.string().required(),
+    alias: Joi.string().alphanum().required()
+  }
+};
