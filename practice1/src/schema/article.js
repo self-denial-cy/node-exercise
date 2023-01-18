@@ -6,3 +6,9 @@ exports.addArticleCategorySchema = {
     alias: Joi.string().alphanum().required()
   }
 };
+
+exports.delArticleCategorySchema = {
+  params: {
+    id: Joi.number().integer().min(1).required()
+  }
+};
