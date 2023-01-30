@@ -1,4 +1,19 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '../../uploads'));
+  },
+  filename: (req, file, cb) => {
+    const uniqueKey = '' + Date.now() + Math.round(Math.random() * 1e9);
+    const originalname = file.originalname;
+    const arr = originalname.split('.');
+    const suffix = arr[arr.length - 1];
+    cb(null, `${uniqueKey}.${suffix}`);
+  }
+});
+const upload = multer({ storage });
 const validate = require('../middleware/validate');
 const {
   getArticleCategoryListHandler,
@@ -12,7 +27,8 @@ const {
   addArticleCategorySchema,
   delArticleCategorySchema,
   getArticleCategorySchema,
-  updateArticleCategorySchema
+  updateArticleCategorySchema,
+  addArticleSchema
 } = require('../schema/article');
 
 const router = express.Router();
@@ -33,6 +49,6 @@ router.get('/category/get/:id', validate(getArticleCategorySchema), getArticleCa
 router.post('/category/update', validate(updateArticleCategorySchema), updateArticleCategoryHandler);
 
 // 新增文章
-router.post('/add', addArticleHandler);
+router.post('/add', upload.single('coverImg'), validate(addArticleSchema), addArticleHandler);
 
 module.exports = router;

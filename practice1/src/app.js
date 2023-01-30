@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const Joi = require('joi');
+const path = require('path');
 const { expressjwt } = require('express-jwt');
 const { secretKey } = require('./config/index');
 const userRouter = require('./router/user');
@@ -12,7 +13,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(expressjwt({ secret: secretKey, algorithms: ['HS256'] }).unless({ path: [/^\/api\//] }));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(expressjwt({ secret: secretKey, algorithms: ['HS256'] }).unless({ path: [/^\/api\//, /^\/uploads\//] }));
 
 app.use('/api', userRouter);
 app.use('/my', userInfoRouter);
