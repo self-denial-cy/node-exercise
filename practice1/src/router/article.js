@@ -5,7 +5,8 @@ const {
   addArticleCategoryHandler,
   delArticleCategoryHandler,
   getArticleCategoryHandler,
-  updateArticleCategoryHandler
+  updateArticleCategoryHandler,
+  addArticleHandler
 } = require('../handler/article');
 const {
   addArticleCategorySchema,
@@ -30,5 +31,8 @@ router.get('/category/get/:id', validate(getArticleCategorySchema), getArticleCa
 
 // 修改单个文章分类
 router.post('/category/update', validate(updateArticleCategorySchema), updateArticleCategoryHandler);
+
+// 新增文章
+router.post('/add', addArticleHandler);
 
 module.exports = router;

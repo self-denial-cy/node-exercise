@@ -100,3 +100,6 @@ exports.updateArticleCategoryHandler = (req, res) => {
     });
   });
 };
+
+// 新增文章
+exports.addArticleHandler = (req, res) => {};
