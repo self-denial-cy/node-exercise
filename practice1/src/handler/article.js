@@ -106,17 +106,13 @@ exports.addArticleHandler = (req, res) => {
   const body = req.body;
   const file = req.file;
   const auth = req.auth;
-  console.log(file);
   if (!file || file.fieldname !== 'coverImg') {
     return res.send({ ret: 0, msg: '请上传文章封面图片' });
   }
-  const originalname = file.originalname;
-  const arr = originalname.split('.');
-  const suffix = arr[arr.length - 1];
   const article = {
     title: body.title,
     content: body.content,
-    cover_img: `/uploads/${file.filename}.${suffix}`,
+    cover_img: `/uploads/${file.filename}`,
     publish_at: new Date().toLocaleString(),
     state: body.state,
     category_id: body.categoryId,

@@ -1,16 +1,20 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads'));
+    const targetDir = path.join(__dirname, '../../uploads');
+    if (!fs.existsSync(targetDir)) {
+      fs.mkdirSync(targetDir);
+    }
+    cb(null, targetDir);
   },
   filename: (req, file, cb) => {
     const uniqueKey = '' + Date.now() + Math.round(Math.random() * 1e9);
     const originalname = file.originalname;
-    const arr = originalname.split('.');
-    const suffix = arr[arr.length - 1];
-    cb(null, `${uniqueKey}.${suffix}`);
+    const suffix = originalname.substring(originalname.lastIndexOf('.'));
+    cb(null, `${uniqueKey}${suffix}`);
   }
 });
 const upload = multer({ storage });
