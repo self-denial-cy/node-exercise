@@ -1,7 +1,8 @@
 {
   "scripts": {
     "lint": "eslint --ext .js src",
-    "lint:fix": "eslint --fix --ext .js src"
+    "lint:fix": "eslint --fix --ext .js src",
+    "serve": "nodemon ./src/app.js"
   },
   "devDependencies": {
     "eslint": "^8.28.0",
