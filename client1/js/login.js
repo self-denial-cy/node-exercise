@@ -1,12 +1,12 @@
 $(function () {
-  // 点击“去注册账号”的链接
-  $('#link_reg').on('click', function () {
+  // 点击去注册账号
+  $('#reg-link').on('click', function () {
     $('.login-box').hide()
     $('.reg-box').show()
   })
 
-  // 点击“去登录”的链接
-  $('#link_login').on('click', function () {
+  // 点击去登录
+  $('#login-link').on('click', function () {
     $('.login-box').show()
     $('.reg-box').hide()
   })
@@ -32,14 +32,14 @@ $(function () {
   })
 
   // 监听注册表单的提交事件
-  $('#form_reg').on('submit', function (e) {
+  $('#reg-form').on('submit', function (e) {
     // 1. 阻止默认的提交行为
     e.preventDefault()
     // 2. 发起Ajax的POST请求
     var data = {
-      userNo: $('#form_reg [name=username]').val(),
-      password: $('#form_reg [name=password]').val(),
-      repeatPassword: $('#form_reg [name=repassword]').val()
+      userNo: $('#reg-form [name=userNo]').val(),
+      password: $('#reg-form [name=password]').val(),
+      repeatPassword: $('#reg-form [name=repeatPassword]').val()
     }
     $.post('/api/register', data, function (res) {
       if (res.ret !== 1) {
@@ -47,12 +47,12 @@ $(function () {
       }
       layer.msg('注册成功，请登录')
       // 模拟人的点击行为
-      $('#link_login').click()
+      $('#login-link').click()
     })
   })
 
   // 监听登录表单的提交事件
-  $('#form_login').submit(function (e) {
+  $('#login-form').submit(function (e) {
     // 阻止默认提交行为
     e.preventDefault()
     $.ajax({

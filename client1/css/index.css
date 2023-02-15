@@ -20,7 +20,7 @@ a {
   transition: none !important;
 }
 
-.userinfo {
+.user-info {
   height: 60px;
   line-height: 60px;
   text-align: center;
@@ -28,7 +28,7 @@ a {
   user-select: none;
 }
 
-.layui-side-scroll .userinfo {
+.layui-side-scroll .user-info {
   border-bottom: 1px solid #282b33;
 }
 

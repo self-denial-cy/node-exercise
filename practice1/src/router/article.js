@@ -25,14 +25,16 @@ const {
   delArticleCategoryHandler,
   getArticleCategoryHandler,
   updateArticleCategoryHandler,
-  addArticleHandler
+  addArticleHandler,
+  pageArticleHandler
 } = require('../handler/article');
 const {
   addArticleCategorySchema,
   delArticleCategorySchema,
   getArticleCategorySchema,
   updateArticleCategorySchema,
-  addArticleSchema
+  addArticleSchema,
+  pageArticleSchema
 } = require('../schema/article');
 
 const router = express.Router();
@@ -54,5 +56,8 @@ router.post('/category/update', validate(updateArticleCategorySchema), updateArt
 
 // 新增文章
 router.post('/add', upload.single('coverImg'), validate(addArticleSchema), addArticleHandler);
+
+// 分页查询文章列表
+router.get('/page', validate(pageArticleSchema), pageArticleHandler);
 
 module.exports = router;

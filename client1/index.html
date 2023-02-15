@@ -23,7 +23,7 @@
       <!-- 头部区域（可配合layui已有的水平导航） -->
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
-          <a href="javascript:;" class="userinfo">个人中心</a>
+          <a href="javascript:;" class="user-info">个人中心</a>
           <dl class="layui-nav-child">
             <dd><a href="./pages/user/user_info.html" target="fm">基本资料</a></dd>
             <dd><a href="./pages/user/user_avatar.html" target="fm">更换头像</a></dd>
@@ -40,16 +40,16 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree" lay-shrink="all">
           <li class="layui-nav-item layui-this">
-            <a href="./pages/home/dashboard.html" target="fm"><span class="iconfont icon-home"></span>首页</a>
+            <a href="./pages/home.html" target="fm"><span class="iconfont icon-home"></span>首页</a>
           </li>
           <li class="layui-nav-item">
             <a href="javascript:;"><span class="iconfont icon-article"></span>文章管理</a>
             <dl class="layui-nav-child">
               <dd>
-                <a href="./pages/article/art_cate.html" target="fm"><i class="layui-icon layui-icon-app"></i>文章类别</a>
+                <a href="./pages/article/category.html" target="fm"><i class="layui-icon layui-icon-app"></i>文章类别</a>
               </dd>
               <dd>
-                <a href="./pages/article/art_list.html" target="fm"><i class="layui-icon layui-icon-app"></i>文章列表</a>
+                <a href="./pages/article/list.html" target="fm"><i class="layui-icon layui-icon-app"></i>文章列表</a>
               </dd>
               <dd>
                 <a href="./pages/article/art_pub.html" target="fm"><i class="layui-icon layui-icon-app"></i>发布文章</a>
@@ -73,9 +73,9 @@
         </ul>
       </div>
     </div>
-    <div class="layui-body">
+    <div class="layui-body" style="bottom: 0;">
       <!-- 内容主体区域 -->
-      <iframe name="fm" src="./pages/home/dashboard.html" frameborder="0"></iframe>
+      <iframe name="fm" src="./pages/home.html" frameborder="0"></iframe>
     </div>
   </div>
 </body>

@@ -129,3 +129,40 @@ exports.addArticleHandler = (req, res) => {
     res.send({ ret: 1, msg: '发布成功' });
   });
 };
+
+// 分页查询文章
+exports.pageArticleHandler = (req, res) => {
+  const query = req.query;
+  const auth = req.auth;
+  const { category = '', state = '', page, pageSize } = query;
+  const sqlStr = `
+    select
+    a.id as id,
+    a.title as title,
+    a.content as content,
+    a.cover_img as coverImg,
+    a.publish_at as publishAt,
+    a.state as state,
+    b.id as categoryId,
+    b.name as categoryName,
+    c.id as authorId,
+    c.user_no as authorNo
+    from
+    ev_articles a
+    left join ev_article_category b on a.category_id = b.id and b.is_delete = 0
+    left join ev_users c on a.author_id = c.id
+    where
+    a.is_delete = 0
+    and ('' = '${state}' or a.state = '${state}')
+    and ('' = '${category}' or b.id = '${category}')
+    and a.author_id = ${auth.id}
+    order by a.id desc
+    limit ${pageSize} offset ${(page - 1) * pageSize};
+  `;
+  db.query(sqlStr, (err, results) => {
+    if (err) {
+      return res.send({ ret: 0, msg: err.message });
+    }
+    res.send({ ret: 1, msg: '查询成功', data: results, total: results.length });
+  });
+};

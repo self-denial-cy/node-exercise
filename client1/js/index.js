@@ -1,8 +1,21 @@
 $(function () {
+  var layer = layui.layer
+
   // 调用 getUserInfo 获取用户基本信息
   getUserInfo()
 
-  var layer = layui.layer
+  // 获取用户的基本信息
+  function getUserInfo() {
+    $.ajax({
+      method: 'GET',
+      url: '/my/getUserInfo',
+      success: function (res) {
+        if (res.ret !== 1) {
+          return layer.msg('获取用户信息失败')
+        }
+      }
+    })
+  }
 
   // 点击按钮，实现退出功能
   $('#logout').on('click', function () {
@@ -17,17 +30,3 @@ $(function () {
     })
   })
 })
-
-// 获取用户的基本信息
-function getUserInfo() {
-  var layer = layui.layer
-  $.ajax({
-    method: 'GET',
-    url: '/my/getUserInfo',
-    success: function (res) {
-      if (res.ret !== 1) {
-        return layer.msg('获取用户信息失败')
-      }
-    }
-  })
-}

@@ -35,3 +35,12 @@ exports.addArticleSchema = {
     state: Joi.string().valid('已发布', '草稿').required()
   }
 };
+
+exports.pageArticleSchema = {
+  query: {
+    category: Joi.number().integer().min(1).allow(''),
+    state: Joi.string().valid('已发布', '草稿').allow(''),
+    page: Joi.number().integer().min(1).required(),
+    pageSize: Joi.number().integer().min(1).required()
+  }
+};
