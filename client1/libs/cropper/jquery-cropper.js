@@ -10,9 +10,10 @@
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery'), require('cropperjs')) :
-  typeof define === 'function' && define.amd ? define(['jquery', 'cropperjs'], factory) :
-  (global = global || self, factory(global.jQuery, global.Cropper));
-}(this, function ($, Cropper) { 'use strict';
+    typeof define === 'function' && define.amd ? define(['jquery', 'cropperjs'], factory) :
+      (global = global || self, factory(global.jQuery, global.Cropper));
+}(this, function ($, Cropper) {
+  'use strict';
 
   $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
   Cropper = Cropper && Cropper.hasOwnProperty('default') ? Cropper['default'] : Cropper;

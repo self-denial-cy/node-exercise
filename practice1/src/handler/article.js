@@ -166,3 +166,18 @@ exports.pageArticleHandler = (req, res) => {
     res.send({ ret: 1, msg: '查询成功', data: results, total: results.length });
   });
 };
+
+// 删除文章
+exports.delArticleHandler = (req, res) => {
+  const params = req.params;
+  const sqlStr = 'update ev_articles set is_delete = 1 where id = ?';
+  db.query(sqlStr, params.id, (err, result) => {
+    if (err) {
+      return res.send({ ret: 0, msg: err.message });
+    }
+    if (result.affectedRows !== 1) {
+      return res.send({ ret: 0, msg: '删除失败，请稍后再试' });
+    }
+    res.send({ ret: 1, msg: '删除成功' });
+  });
+};

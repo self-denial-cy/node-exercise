@@ -1,7 +1,4 @@
 $(function () {
-  var layer = layui.layer
-  var form = layui.form
-
   initCategories()
 
   // 获取文章分类的列表

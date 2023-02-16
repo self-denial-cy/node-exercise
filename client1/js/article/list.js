@@ -1,25 +1,4 @@
 $(function () {
-  var layer = layui.layer
-  var form = layui.form
-  var laypage = layui.laypage
-
-  // 定义美化时间的过滤器
-  template.defaults.imports.dateFormat = function (date) {
-    const dt = new Date(date)
-    var y = dt.getFullYear()
-    var m = padZero(dt.getMonth() + 1)
-    var d = padZero(dt.getDate())
-    var hh = padZero(dt.getHours())
-    var mm = padZero(dt.getMinutes())
-    var ss = padZero(dt.getSeconds())
-    return y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
-  }
-
-  // 定义补零的函数
-  function padZero(n) {
-    return n > 9 ? n : '0' + n
-  }
-
   // 定义一个查询的参数对象，将来请求数据的时候，需要将请求参数对象提交到服务器
   var q = {
     page: 1, // 页码值，默认请求第一页的数据
@@ -123,20 +102,18 @@ $(function () {
     layer.confirm('确认删除?', { icon: 3, title: '提示' }, function (index) {
       $.ajax({
         method: 'GET',
-        url: '/my/article/delete/' + id,
+        url: '/article/del/' + id,
         success: function (res) {
-          if (res.status !== 0) {
-            return layer.msg('删除文章失败！')
+          if (res.ret !== 1) {
+            return layer.msg('删除文章失败')
           }
-          layer.msg('删除文章成功！')
+          layer.msg('删除文章成功')
           // 当数据删除完成后，需要判断当前这一页中，是否还有剩余的数据
-          // 如果没有剩余的数据了,则让页码值 -1 之后,
-          // 再重新调用 initTable 方法
-          // 4
+          // 如果没有剩余的数据了，则让页码值 -1
           if (len === 1) {
             // 如果 len 的值等于1，证明删除完毕之后，页面上就没有任何数据了
             // 页码值最小必须是 1
-            q.pagenum = q.pagenum === 1 ? 1 : q.pagenum - 1
+            q.page = q.page === 1 ? 1 : q.page - 1
           }
           initTable()
         }
