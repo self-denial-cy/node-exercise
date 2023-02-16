@@ -1,25 +1,26 @@
 $(function () {
-  initCate()
-  // 初始化富文本编辑器
-  initEditor()
+  initCategorys()
 
   // 定义加载文章分类的方法
-  function initCate() {
+  function initCategorys() {
     $.ajax({
       method: 'GET',
-      url: '/my/article/cates',
+      url: '/article/category/list',
       success: function (res) {
-        if (res.status !== 0) {
-          return layer.msg('初始化文章分类失败！')
+        if (res.ret !== 1) {
+          return layer.msg('初始化文章分类失败')
         }
         // 调用模板引擎，渲染分类的下拉菜单
-        var htmlStr = template('tpl-cate', res)
-        $('[name=cate_id]').html(htmlStr)
+        var htmlStr = template('tpl-category', res)
+        $('[name=category]').html(htmlStr)
         // 一定要记得调用 form.render() 方法
         form.render()
       }
     })
   }
+
+  // 初始化富文本编辑器
+  initEditor()
 
   // 1. 初始化图片裁剪器
   var $image = $('#image')
@@ -34,7 +35,7 @@ $(function () {
   $image.cropper(options)
 
   // 为选择封面的按钮，绑定点击事件处理函数
-  $('#btnChooseImage').on('click', function () {
+  $('#btn-choose').on('click', function () {
     $('#coverFile').click()
   })
 
@@ -43,7 +44,7 @@ $(function () {
     // 获取到文件的列表数组
     var files = e.target.files
     // 判断用户是否选择了文件
-    if (files.length === 0) {
+    if (!files.length) {
       return
     }
     // 根据文件，创建对应的 URL 地址
@@ -55,6 +56,7 @@ $(function () {
       .cropper(options) // 重新初始化裁剪区域
   })
 
+  // TODO
   // 定义文章的发布状态
   var art_state = '已发布'
 
