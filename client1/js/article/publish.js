@@ -20,6 +20,7 @@ $(function () {
   }
 
   // 初始化富文本编辑器
+  $('#form-publish [name=content]').show()
   initEditor()
 
   // 1. 初始化图片裁剪器
@@ -56,24 +57,22 @@ $(function () {
       .cropper(options) // 重新初始化裁剪区域
   })
 
-  // TODO
   // 定义文章的发布状态
-  var art_state = '已发布'
+  var publishState = '已发布'
 
   // 为存为草稿按钮，绑定点击事件处理函数
-  $('#btnSave2').on('click', function () {
-    art_state = '草稿'
+  $('#btn-save').on('click', function () {
+    publishState = '草稿'
   })
 
   // 为表单绑定 submit 提交事件
-  $('#form-pub').on('submit', function (e) {
-    // 1. 阻止表单的默认提交行为
+  $('#form-publish').on('submit', function (e) {
     e.preventDefault()
-    // 2. 基于 form 表单，快速创建一个 FormData 对象
-    var fd = new FormData($(this)[0])
-    // 3. 将文章的发布状态，存到 fd 中
-    fd.append('state', art_state)
-    // 4. 将封面裁剪过后的图片，输出为一个文件对象
+    var formData = new FormData()
+    formData.append('title', $('#form-publish [name=title]').val())
+    formData.append('categoryId', $('#form-publish [name=category]').val())
+    formData.append('content', tinymce.activeEditor.getContent())
+    formData.append('state', publishState)
     $image
       .cropper('getCroppedCanvas', {
         // 创建一个 Canvas 画布
@@ -83,10 +82,9 @@ $(function () {
       .toBlob(function (blob) {
         // 将 Canvas 画布上的内容，转化为文件对象
         // 得到文件对象后，进行后续的操作
-        // 5. 将文件对象，存储到 fd 中
-        fd.append('cover_img', blob)
+        formData.append('coverImg', blob)
         // 6. 发起 ajax 数据请求
-        publishArticle(fd)
+        publishArticle(formData)
       })
   })
 
@@ -94,19 +92,18 @@ $(function () {
   function publishArticle(fd) {
     $.ajax({
       method: 'POST',
-      url: '/my/article/add',
+      url: '/article/add',
       data: fd,
-      // 注意：如果向服务器提交的是 FormData 格式的数据，
-      // 必须添加以下两个配置项
+      // 注意：如果向服务器提交的是 FormData 格式的数据，必须添加以下两个配置项
       contentType: false,
       processData: false,
       success: function (res) {
-        if (res.status !== 0) {
-          return layer.msg('发布文章失败！')
+        if (res.ret !== 1) {
+          return layer.msg('发布文章失败')
         }
-        layer.msg('发布文章成功！')
+        layer.msg('发布文章成功')
         // 发布文章成功后，跳转到文章列表页面
-        location.href = '/article/art_list.html'
+        location.href = '/pages/article/list.html'
       }
     })
   }

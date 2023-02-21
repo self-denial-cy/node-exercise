@@ -2,19 +2,6 @@ $(function () {
   // 调用 getUserInfo 获取用户基本信息
   getUserInfo()
 
-  // 获取用户的基本信息
-  function getUserInfo() {
-    $.ajax({
-      method: 'GET',
-      url: '/my/getUserInfo',
-      success: function (res) {
-        if (res.ret !== 1) {
-          return layer.msg('获取用户信息失败')
-        }
-      }
-    })
-  }
-
   // 点击按钮，实现退出功能
   $('#logout').on('click', function () {
     // 提示用户是否确认退出
@@ -28,3 +15,16 @@ $(function () {
     })
   })
 })
+
+// 获取用户的基本信息
+function getUserInfo() {
+  $.ajax({
+    method: 'GET',
+    url: '/my/getUserInfo',
+    success: function (res) {
+      if (res.ret !== 1) {
+        return layer.msg('获取用户信息失败')
+      }
+    }
+  })
+}

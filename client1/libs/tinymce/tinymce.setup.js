@@ -7,10 +7,10 @@ function initEditor() {
     statusbar: false,
     width: '100%',
     plugins: [
-      'advlist autolink link image lists charmap preview hr anchor pagebreak spellchecker',
+      'advlist autolink link image lists charmap preview hr anchor pagebreak',
       'searchreplace wordcount visualblocks visualchars code insertdatetime nonbreaking',
       'save table contextmenu directionality template paste textcolor',
-      'codesample imageupload'
+      'codesample'
     ],
     toolbar:
       'insertfile undo redo | \
@@ -21,8 +21,7 @@ function initEditor() {
        image | \
        preview | \
        forecolor emoticons |\
-       codesample fontsizeselect |\
-       imageupload',
+       codesample fontsizeselect',
     fontsize_formats: '10pt 12pt 14pt 18pt 24pt 36pt',
     nonbreaking_force_tab: true
   })

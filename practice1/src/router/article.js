@@ -12,9 +12,9 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const uniqueKey = '' + Date.now() + Math.round(Math.random() * 1e9);
-    const originalname = file.originalname;
-    const suffix = originalname.substring(originalname.lastIndexOf('.'));
-    cb(null, `${uniqueKey}${suffix}`);
+    const mimetype = file.mimetype;
+    const suffix = mimetype.substring(mimetype.lastIndexOf('/') + 1);
+    cb(null, `${uniqueKey}.${suffix}`);
   }
 });
 const upload = multer({ storage });
