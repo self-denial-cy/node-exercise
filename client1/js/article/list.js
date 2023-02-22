@@ -121,4 +121,15 @@ $(function () {
       layer.close(index)
     })
   })
+
+  $('tbody').on('click', '.btn-preview', function () {
+    var content = $(this).attr('data-content')
+    layer.open({
+      skin: 'overflow-fit',
+      type: 1,
+      area: ['800px', '500px'],
+      title: '预览',
+      content: $('#tpl-preview').html().replace('$$content$$', encodeURIComponent(content))
+    })
+  })
 })
