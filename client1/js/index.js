@@ -25,6 +25,16 @@ function getUserInfo() {
       if (res.ret !== 1) {
         return layer.msg('获取用户信息失败')
       }
+      renderUserInfo(res.data)
     }
   })
+}
+
+function renderUserInfo(userInfo) {
+  var name = userInfo.nickname || userInfo.userNo
+  $('#welcome').html('欢迎&nbsp;&nbsp;' + name)
+  $('.welcome').show()
+  if (userInfo.avatar) {
+    $('.layui-nav-img').attr('src', userInfo.avatar).show()
+  }
 }

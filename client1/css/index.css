@@ -35,3 +35,8 @@ a {
 .layui-nav-item a {
   font-size: 12px;
 }
+
+#welcome {
+  font-size: 18px;
+  font-weight: bold;
+}

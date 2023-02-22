@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>主页</title>
+  <title>后台管理系统</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <!-- 导入 layui 的样式表 -->
   <link rel="stylesheet" href="./libs/layui/css/layui.css" />
@@ -23,11 +23,14 @@
       <!-- 头部区域（可配合layui已有的水平导航） -->
       <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
-          <a href="javascript:;" class="user-info">个人中心</a>
+          <a href="javascript:;" class="user-info">
+            <img style="display: none;" class="layui-nav-img" />
+            <span>个人中心</span>
+          </a>
           <dl class="layui-nav-child">
             <dd><a href="./pages/user/info.html" target="fm">基本资料</a></dd>
             <dd><a href="./pages/user/avatar.html" target="fm">更换头像</a></dd>
-            <dd><a href="./pages/user/user_pwd.html" target="fm">重置密码</a></dd>
+            <dd><a href="./pages/user/pwd.html" target="fm">重置密码</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
@@ -36,7 +39,10 @@
       </ul>
     </div>
     <div class="layui-side layui-bg-black">
-      <div class="layui-side-scroll">
+      <div class="layui-side-scroll" style="width: 200px;">
+        <div class="user-info welcome" style="display: none;">
+          <span id="welcome"></span>
+        </div>
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree" lay-shrink="all">
           <li class="layui-nav-item layui-this">
@@ -66,7 +72,7 @@
                 <a href="./pages/user/avatar.html" target="fm"><i class="layui-icon layui-icon-app"></i>更换头像</a>
               </dd>
               <dd>
-                <a href="./pages/user/user_pwd.html" target="fm"><i class="layui-icon layui-icon-app"></i>重置密码</a>
+                <a href="./pages/user/pwd.html" target="fm"><i class="layui-icon layui-icon-app"></i>重置密码</a>
               </dd>
             </dl>
           </li>
