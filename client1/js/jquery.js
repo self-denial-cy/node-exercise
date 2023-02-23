@@ -1,3 +1,3 @@
-$ = layui.$
-jquery = layui.jquery
-jQuery = layui.$
+$ = layui.$;
+jquery = layui.jquery;
+jQuery = layui.$;

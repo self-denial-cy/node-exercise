@@ -1,6 +1,15 @@
 {
   "scripts": {
-    "server": "http-server -c-1 -o"
+    "server": "http-server -c-1 -o",
+    "lint:js": "eslint js",
+    "lint:js:fix": "eslint --fix js"
+  },
+  "devDependencies": {
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.0"
   },
   "dependencies": {
     "http-server": "^14.1.1"
