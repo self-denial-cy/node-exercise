@@ -14,10 +14,10 @@ body {
 }
 
 .cover-left {
-  width: 400px;
-  height: 280px;
   overflow: hidden;
   margin-right: 20px;
+  width: 400px;
+  height: 280px;
 }
 
 .cover-right {
@@ -27,9 +27,9 @@ body {
 }
 
 .img-preview {
+  overflow: hidden;
+  margin-bottom: 20px;
   width: 200px;
   height: 140px;
   background-color: #ccc;
-  margin-bottom: 20px;
-  overflow: hidden;
 }

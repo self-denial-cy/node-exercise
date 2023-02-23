@@ -18,17 +18,17 @@ body {
 }
 
 .cropper-box {
+  overflow: hidden;
   width: 350px;
   height: 350px;
   background-color: cyan;
-  overflow: hidden;
 }
 
 .preview-box {
   display: flex;
   flex-direction: column;
-  flex: 1;
   align-items: center;
+  flex: 1;
 }
 
 .img-preview {
@@ -43,16 +43,16 @@ body {
 }
 
 .w50 {
+  margin-top: 50px;
   width: 50px;
   height: 50px;
   background-color: gray;
-  margin-top: 50px;
 }
 
 .size {
+  text-align: center;
   font-size: 12px;
   color: gray;
-  text-align: center;
 }
 
 .btn-group {

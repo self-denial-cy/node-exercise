@@ -3,8 +3,8 @@
 }
 
 .layui-icon {
-  margin-right: 8px;
   margin-left: 20px;
+  margin-right: 8px;
 }
 
 iframe {
@@ -22,10 +22,10 @@ a {
 
 .user-info {
   height: 60px;
+  user-select: none;
   line-height: 60px;
   text-align: center;
   font-size: 12px;
-  user-select: none;
 }
 
 .layui-side-scroll .user-info {
@@ -37,6 +37,6 @@ a {
 }
 
 #welcome {
-  font-size: 18px;
   font-weight: bold;
+  font-size: 18px;
 }
