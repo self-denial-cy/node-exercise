@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
 });
 
 const fetchData = (callback) => {
-  https.get('https://i.maoyan.com', (res) => {
+  https.get('https://i.maoyan.com/?requestCode=af0b40dd797f89996f36d7b9c9a6d2bahgsxd#movie', (res) => {
     let data = '';
     res.on('data', (chunk) => {
       console.log('获取数据中');
