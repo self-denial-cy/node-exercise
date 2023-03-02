@@ -7,6 +7,7 @@ fs.mkdir('./dir', (err) => {
     fs.rename('./dir', './rid', (err) => {
       if (err) return console.log(err);
       setTimeout(() => {
+        // rmdir 只能删除空文件夹
         fs.rmdir('./rid', (err) => {
           if (err) return console.log(err);
           console.log('Game Over');
