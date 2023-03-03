@@ -1,5 +1,4 @@
 // 导入 express
-const e = require('express');
 const express = require('express');
 // NodeJs 内置了 querystring 模块，专门用来处理查询字符串
 // 通过该模块的 parse 函数，可以轻松的将查询字符串解析成对象格式

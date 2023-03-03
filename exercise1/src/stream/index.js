@@ -39,6 +39,8 @@ const read = () => {
 const readAndWrite = () => {
   const rs = fs.createReadStream('./index.js', 'utf8');
   const ws = fs.createWriteStream('./stream.txt', 'utf8');
+  // 一边读一边写，通过 pipe【管道】 传输数据
+  // pipe【管道】 会自动关闭，因此不需要 end 写入流
   rs.pipe(ws);
 };
 
