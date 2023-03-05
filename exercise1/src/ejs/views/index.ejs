@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ejs 模板引擎</title>
+  <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
+</head>
+
+<body>
+  <%# <h1>0.注释语法</h1> %>
+  <h1>1.引入 Layout</h1>
+  <%- include('layouts/header', { param: '我是传入 Layout 的参数' }); %>
+  <h1>2.列表渲染</h1>
+  <ul>
+    <% list.forEach(function(item,index){ %>
+    <li>
+      <h4>电影名称：</h4>
+      <p><%= item.name %></p>
+      <h4>简介：</h4>
+      <p><%= item.brief %></p>
+      <h4>导演：</h4>
+      <p><%= item.author %></p>
+    </li>
+    <% }); %>
+  </ul>
+  <h1>3.转义和不转义</h1>
+  <%= html %>
+  <%- html %>
+  <%= js %>
+  <%- js %>
+  <h1>4.条件渲染</h1>
+  <% if(flag){ %>
+  <p>条件为真时渲染的内容</p>
+  <% }else{ %>
+  <p>条件为假时渲染的内容</p>
+  <% } %>
+</body>
+
+</html>
