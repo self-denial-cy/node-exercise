@@ -1,16 +1,27 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017', {
-  dbName: 'db',
-  autoIndex: false // 生产环境关闭自动索引选项以提升性能
-});
+mongoose
+  .connect('mongodb://127.0.0.1:27017', {
+    dbName: 'db',
+    autoIndex: false, // 生产环境关闭自动索引选项以提升性能
+    autoCreate: false //  生产环境关闭以提升性能
+  })
+  .catch((err) => {
+    console.log('数据库连接错误');
+    console.log(err);
+  });
 
 // 监听数据库连接状态
-mongoose.connection.once('open', () => {
+mongoose.connection.on('open', () => {
   console.log('数据库连接成功');
 });
 
-mongoose.connection.once('close', () => {
+mongoose.connection.on('error', (err) => {
+  console.log('数据库连接错误');
+  console.log(err);
+});
+
+mongoose.connection.on('close', () => {
   console.log('数据库连接断开');
 });
 
