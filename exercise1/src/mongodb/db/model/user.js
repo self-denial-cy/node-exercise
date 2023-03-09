@@ -54,18 +54,21 @@ const userSchema = new Schema(
 // 添加实例方法
 userSchema.methods.findPets = function () {
   // 这里因为需要 this 指向当前 User 实例，因此不能使用箭头函数
-  return Pet.find({ ownerId: this._id }).exec();
+  return Pet.find({ ownerId: this.id }).select('-__v').exec();
 };
 
 // 添加静态方法
 userSchema.statics.findByName = function (name) {
   // 这里的 this 指向 User 模型
-  return this.find({ name: name }).exec();
+  // 直接调用查询辅助方法
+  // return this.find().findByName(name);
+  return this.find().where({ name }).select('-__v').exec();
 };
 
 // 添加查询辅助方法
-userSchema.query.byName = function (name) {
-  return this.where({ name: name }).exec();
+userSchema.query.findByName = function (name) {
+  // 这里的 this 指向调用当前查询辅助方法的 Query 实例
+  return this.where({ name }).select('-__v').exec(); // 在要排除的字段前加上 -
 };
 
 // 创建模型
