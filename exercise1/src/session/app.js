@@ -8,8 +8,14 @@ const app = express();
 app.use(
   session({
     secret: 'secret',
-    resave: false,
-    saveUninitialized: true
+    cookie: {
+      // 单位为毫秒【过期时间】
+      maxAge: 1000 * 60 * 60 * 24,
+      // 为 true 时表示只有 https 协议才能访问 cookie【设置 https-only 属性】
+      secure: false
+    },
+    resave: true, // 为 true 时表示每次设置 session 对象后会重新计算过期时间
+    saveUninitialized: false // 为 true 时会在第一次访问时就生成 cookie，但是这个 cookie 无效【未激活状态】【无副作用】
   })
 );
 app.use(express.static('./pages'));
