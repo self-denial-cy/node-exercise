@@ -1,9 +1,11 @@
 {
   "scripts": {
     "lint": "eslint --ext .js src",
-    "lint:fix": "eslint --fix --ext .js src"
+    "lint:fix": "eslint --fix --ext .js src",
+    "apidoc": "apidoc -i ./src/apidoc -o apidocs"
   },
   "devDependencies": {
+    "apidoc": "^0.54.0",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -11,12 +13,14 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
+    "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
     "ejs": "^3.1.8",
     "express": "^4.17.1",
     "express-jwt": "^8.3.0",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
+    "koa": "^2.14.1",
     "mongoose": "^7.0.1",
     "mysql": "^2.18.1"
   }
