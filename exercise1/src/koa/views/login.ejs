@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>登录</title>
+  <!-- <link rel="stylesheet" href="/css/reset.css"> -->
+  <title>Login</title>
 </head>
 
 <body>
+  <h1>哎，小伙子，你那什么车啊</h1>
   <!-- 登录表单 -->
   <form id="formLogin">
     <div>账号：<input type="text" name="username" placeholder="请输入账号" /></div>
@@ -27,7 +30,8 @@
       $.post('/api/login', $(this).serialize(), function (res) {
         // status 为 0 表示登录成功；否则表示登录失败
         if (res.status === 0) {
-          location.href = './index.html'
+          alert('登录成功')
+          location.href = '/view'
         } else {
           alert('登录失败')
         }

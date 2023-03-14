@@ -12,6 +12,7 @@
     "prettier": "^2.8.0"
   },
   "dependencies": {
+    "@koa/multer": "^3.0.2",
     "cheerio": "^1.0.0-rc.12",
     "connect-mongo": "^4.6.0",
     "cors": "^2.8.5",
@@ -21,6 +22,11 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
     "koa": "^2.14.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^12.0.0",
+    "koa-session": "^6.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^8.0.0",
     "mongoose": "^7.0.1",
     "mysql": "^2.18.1"
   }

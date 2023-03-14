@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View</title>
+</head>
+
+<body>
+  <h1>我是模板页面</h1>
+  <h2>
+    <%= message %>
+  </h2>
+  <form action="/api/upload" method="post" enctype="multipart/form-data">
+    <label for="name">
+      <input type="text" name="name" placeholder="请输入名称" />
+    </label>
+    <label for="age">
+      <input type="number" name="age" placeholder="请输入年龄" />
+    </label>
+    <label for="avatar">
+      <input type="file" name="avatar" />
+    </label>
+    <button type="submit">提交</button>
+  </form>
+</body>
+
+</html>
