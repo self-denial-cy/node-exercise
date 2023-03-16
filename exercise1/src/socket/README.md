@@ -54,6 +54,3 @@ Sec-WebSocket-Accept: server-random-string
 实际上 HTTP 协议是建立在 TCP 协议之上的，TCP 协议本身就实现了全双工通信，但是 HTTP 协议的【请求-应答】机制限制了全双工通信。WebSocket 连接建立以后，其实只是简单规定了一下：接下来，咱们通信就不使用 HTTP 协议了，直接互相发数据吧。
 
 安全的 WebSocket 连接机制和 HTTPS 类似：首先，浏览器用 `wss://xxx` 创建 WebSocket 连接时，会先通过 HTTPS 创建安全的连接，然后该 HTTPS 连接升级成 WebSocket 连接，底层通信走的仍然是安全的 SSL/TLS 协议
-
-## ws 模块
-
