@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    table {
+      /* border-collapse: collapse; */
+      min-width: 500px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="register">
+    <div>用户&nbsp;&nbsp;<input type="text" name="username" id="username"></div>
+    <div>密码&nbsp;&nbsp;<input type="password" name="password" id="password"></div>
+    <button type="submit">注册</button>
+  </form>
+  <hr>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>用户</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  $(function () {
+    function fetchUsers() {
+      axios({
+        method: 'get',
+        url: '/api/user/list'
+      }).then(({ data }) => {
+        if (data.ret === 1) {
+          $('tbody').html(data.data.map(item => `
+          <tr>
+            <td>${item._id}</td>
+            <td>${item.username}</td>
+          </tr>
+        `))
+        } else {
+          alert(data.msg)
+        }
+      })
+    }
+
+    fetchUsers()
+
+    $('#register').on('submit', function (e) {
+      e.preventDefault()
+      axios({
+        method: 'post',
+        url: '/api/register',
+        data: {
+          username: $('#username').val(),
+          password: $('#password').val()
+        }
+      }).then(({ data }) => {
+        if (data.ret === 1) {
+          fetchUsers()
+        } else {
+          alert(data.msg)
+        }
+      })
+    })
+  })
+</script>
+
+</html>
