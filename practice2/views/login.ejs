@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    .mt10 {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="login">
+    <div>用户&nbsp;&nbsp;<input type="text" name="username" id="username"></div>
+    <div class="mt10">密码&nbsp;&nbsp;<input type="password" name="password" id="password"></div>
+    <button type="submit" class="mt10">登录</button>
+  </form>
+  <hr>
+  <span>尚未注册账户，点击跳转&nbsp;<a href="/register">注册</a>&nbsp;页面</span>
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  // axios 拦截器
+  axios.interceptors.request.use((config) => {
+    // console.log(config)
+    const authorization = localStorage.getItem('Authorization') || ''
+    if (authorization) {
+      config.headers.Authorization = `Bearer ${authorization}`
+    }
+    return config
+  }, (err) => {
+    return Promise.reject(err)
+  })
+  axios.interceptors.response.use((response) => {
+    // console.log(response)
+    const headers = response.headers || {}
+    const authorization = headers.authorization || ''
+    authorization && localStorage.setItem('Authorization', authorization)
+    return response
+  }, (err) => {
+    if (err.response && err.response.status === 401) {
+      // alert(err.response.data.msg)
+      localStorage.removeItem('Authorization')
+      location.href = '/login'
+      return
+    }
+    return Promise.reject(err)
+  })
+</script>
+<script>
+  $(function () {
+    $('#login').on('submit', function (e) {
+      e.preventDefault()
+      axios({
+        method: 'post',
+        url: '/api/login',
+        data: {
+          username: $('#username').val(),
+          password: $('#password').val()
+        }
+      }).then(({ data }) => {
+        if (data.ret === 1) {
+          alert('登录成功，即将跳转首页')
+          location.href = '/index'
+        } else {
+          alert(data.msg)
+        }
+      })
+    })
+  })
+</script>
+
+</html>
