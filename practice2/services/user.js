@@ -8,6 +8,6 @@ module.exports = {
     return User.deleteOne({ _id: id }).exec();
   },
   list: () => {
-    return User.find().select('_id username').sort({ username: 1 }).exec();
+    return User.find().select('_id username avatar').sort({ username: 1 }).exec();
   }
 };

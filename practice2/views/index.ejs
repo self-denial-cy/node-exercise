@@ -10,8 +10,18 @@
   <style>
     table {
       /* border-collapse: collapse; */
-      min-width: 500px;
+      min-width: 888px;
       text-align: center;
+    }
+
+    table thead tr th {
+      height: 66px;
+    }
+
+    table tbody tr td img {
+      width: 75px;
+      height: 75px;
+      vertical-align: middle;
     }
   </style>
 </head>
@@ -22,12 +32,14 @@
       <tr>
         <th>ID</th>
         <th>用户</th>
+        <th>头像</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
   <hr>
-  <button id="logout">退出登录</button>
+  <button id="logout" type="button">退出登录</button>
 </body>
 
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -80,12 +92,52 @@
           <tr>
             <td>${item._id}</td>
             <td>${item.username}</td>
+            <td><img src="${item.avatar}" alt="${item._id}" /></td>
+            <td>
+              <button type="button" data-id="${item._id}" onclick="edit(this)">修改</button>
+              <button type="button" data-id="${item._id}" onclick="del(this)">删除</button>
+            </td>
           </tr>
         `))
       } else {
         alert(data.msg)
       }
     })
+  }
+
+  function edit(el) {
+    const username = prompt('请输入新的用户名')
+    if (username) {
+      const id = $(el).data('id')
+      const data = { username }
+      axios({
+        url: `/api/user/${id}`,
+        method: 'put',
+        data
+      }).then(({ data }) => {
+        if (data.ret === 1) {
+          fetchUsers()
+        } else {
+          alert(data.msg)
+        }
+      })
+    }
+  }
+
+  function del(el) {
+    if (confirm('确认删除吗？')) {
+      const id = $(el).data('id')
+      axios({
+        url: `/api/user/${id}`,
+        method: 'delete'
+      }).then(({ data }) => {
+        if (data.ret === 1) {
+          fetchUsers()
+        } else {
+          alert(data.msg)
+        }
+      })
+    }
   }
 </script>
 
