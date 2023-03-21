@@ -39,6 +39,7 @@
     <tbody></tbody>
   </table>
   <hr>
+  <button id="chat" type="button">进入在线聊天室</button>
   <button id="logout" type="button">退出登录</button>
 </body>
 
@@ -79,6 +80,10 @@
     $('#logout').click(() => {
       localStorage.removeItem('Authorization')
       location.href = '/login'
+    })
+
+    $('#chat').click(() => {
+      location.href = '/chat'
     })
   })
 
