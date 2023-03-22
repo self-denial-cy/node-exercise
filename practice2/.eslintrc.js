@@ -10,7 +10,8 @@ module.exports = {
   rules: {
     'no-useless-escape': 0,
     'no-unused-vars': 0,
-    'no-unreachable': 0
+    'no-unreachable': 0,
+    'no-case-declarations': 0
   },
   extends: ['eslint:recommended', 'plugin:prettier/recommended']
 };
