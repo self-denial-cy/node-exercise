@@ -7,6 +7,10 @@ module.exports = {
     if (!user) return;
     if (password !== user.password) return;
     const token = sign({ id: user._id, username: user.username });
-    return token;
+    return {
+      id: user._id,
+      username: user.username,
+      token: token
+    };
   }
 };

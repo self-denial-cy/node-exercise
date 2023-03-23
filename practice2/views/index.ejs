@@ -39,7 +39,8 @@
     <tbody></tbody>
   </table>
   <hr>
-  <button id="chat" type="button">进入在线聊天室</button>
+  <button id="chat-ws" type="button">进入 ws 在线聊天室</button>
+  <button id="chat-socket-io" type="button">进入 socket.io 在线聊天室</button>
   <button id="logout" type="button">退出登录</button>
 </body>
 
@@ -82,8 +83,12 @@
       location.href = '/login'
     })
 
-    $('#chat').click(() => {
-      location.href = '/chat'
+    $('#chat-ws').click(() => {
+      location.href = '/chat-ws'
+    })
+
+    $('#chat-socket-io').click(() => {
+      location.href = '/chat-socket-io'
     })
   })
 

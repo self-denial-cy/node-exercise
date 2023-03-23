@@ -69,6 +69,8 @@
         }
       }).then(({ data }) => {
         if (data.ret === 1) {
+          localStorage.setItem('id', data.data.id)
+          localStorage.setItem('username', data.data.username)
           alert('登录成功，即将跳转首页')
           location.href = '/index'
         } else {

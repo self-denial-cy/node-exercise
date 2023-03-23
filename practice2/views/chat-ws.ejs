@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>在线聊天室</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <style>
+    input {
+      height: 24px;
+      margin-right: 10px;
+    }
+
+    button {
+      height: 24px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    select {
+      min-width: 100px;
+      height: 28px;
+    }
+
+    .flex {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .section {
+      width: 345px;
+      height: 600px;
+      border: 2px solid black;
+      margin-right: 24px;
+      margin-bottom: 24px;
+    }
+
+    .title {
+      text-align: center;
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 2px solid black;
+    }
+
+    .messages {
+      height: 560px;
+      overflow-y: auto;
+    }
+
+    .message {
+      padding: 8px;
+      border-bottom: 1px solid #262626;
+    }
+
+    .msg {
+      color: #262626;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .from {
+      text-align: right;
+      font-size: small;
+      font-style: italic;
+      color: gray;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <h4>在线聊天室【<span id="username"></span>】</h4>
+  <hr>
+  <input type="text" placeholder="请输入消息内容" id="msg"><button type="button" id="send">Send</button>
+  <select id="sendTo"></select>
+  <hr>
+  <div class="flex" id="sections">
+    <div class="section" id="all" style="display: none;">
+      <div class="title">群聊</div>
+      <div class="messages"></div>
+    </div>
+  </div>
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  $(function () {
+    const token = localStorage.getItem('Authorization')
+    if (!token) return location.href = '/login'
+    const ws = new WebSocket(`ws://localhost:3030?token=${token}`)
+
+    $('#username').text(localStorage.getItem('username'))
+
+    const hash = {}
+
+    const MessageType = {
+      Unauthorized: -1,
+      Error: 0,
+      GroupList: 1,
+      GroupChat: 2,
+      SingleChat: 3
+    };
+
+    const createMessage = (type, data) => {
+      return JSON.stringify({
+        type,
+        data
+      });
+    };
+
+    ws.onopen = () => {
+      console.log('WebSocket already open')
+      // ws.send(createMessage(MessageType.GroupList))
+    }
+
+    ws.onmessage = ({ data }) => {
+      const msgData = JSON.parse(data)
+      let message = ''
+      switch (msgData.type) {
+        case MessageType.Unauthorized:
+          localStorage.removeItem('Authorization')
+          location.href = '/login'
+          break
+        case MessageType.Error:
+          break
+        case MessageType.GroupList:
+          const users = msgData.data || []
+          // console.log(users)
+          $('#sendTo').html('')
+          $('#sendTo').append('<option value="all">All</option>')
+          $('#sendTo').append(users.map(item => `
+            <option value="${item.id}">${item.username}</option>
+          `))
+          break
+        case MessageType.GroupChat:
+          $('#all').show()
+          message += '<div class="message">'
+          message += '<div class="msg">' + msgData.data + '</div>'
+          if (msgData.from) {
+            message += '<div class="from">from ' + msgData.from.username + '</div>'
+          }
+          message += '</div>'
+          $('#all .messages').append(message)
+          break
+        case MessageType.SingleChat:
+          if (!($(`#${msgData.data.room}`).length)) {
+            $('#sections').append(`
+              <div class="section" id="${msgData.data.room}">
+                <div class="title">${msgData.from.username}</div>
+                <div class="messages"></div>
+              </div>
+            `)
+          }
+          message += '<div class="message">'
+          message += '<div class="msg">' + msgData.data.msg + '</div>'
+          if (msgData.from) {
+            message += '<div class="from">from ' + msgData.from.username + '</div>'
+          }
+          message += '</div>'
+          $(`#${msgData.data.room} .messages`).append(message)
+          hash[msgData.from.id] = msgData.data.room
+          break
+        default:
+          break
+      }
+    }
+
+    ws.onerror = (err) => {
+      console.log(err)
+    }
+
+    $('#send').click(() => {
+      const to = $('#sendTo').val()
+      const toName = $('#sendTo').find('option:selected').text()
+      const msg = $('#msg').val()
+      if (!msg) return alert('请输入消息内容')
+      if (to === 'all') {
+        // 群发
+        ws.send(createMessage(MessageType.GroupChat, msg))
+      } else {
+        // 私聊
+        if (hash[to]) {
+          ws.send(createMessage(MessageType.SingleChat, { to, msg, room: hash[to] }))
+          return
+        }
+        const room = Date.now()
+        ws.send(createMessage(MessageType.SingleChat, { to, msg, room }))
+        hash[to] = room
+        $('#sections').append(`
+          <div class="section" id="${room}">
+            <div class="title">${toName}</div>
+            <div class="messages"></div>
+          </div>
+        `)
+      }
+    })
+  })
+</script>
+
+</html>
