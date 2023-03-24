@@ -47,4 +47,6 @@ app.use(async (ctx, next) => {
 // 再注册成应用级中间件
 app.use(router.routes()).use(router.allowedMethods()); // 对于请求路径匹配，但是请求方法不对的情况，加上 allowedMethods 时，会自动提示 405 Method Not Allowed，否则提示 404 Not Found
 
-app.listen(3000);
+// app.listen(3000);
+
+module.exports = app;
