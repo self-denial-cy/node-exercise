@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "debug": "nodemon --inspect ./bin/www"
   },
   "devDependencies": {
     "eslint": "^8.28.0",

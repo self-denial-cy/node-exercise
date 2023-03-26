@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
@@ -8,6 +9,25 @@ app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, './public')));
+
+// 自定义匹配来完全控制哪些请求需要走代理，哪些不需要
+const filter = (pathname, req) => {
+  if (pathname === '/api/proxy' && req.method === 'GET') {
+    return true;
+  }
+};
+// 自定义重写来完全控制改写哪些内容
+const pathRewrite = (path, req) => {
+  console.log(req);
+  return path.replace('/api/proxy', ''); // 这里返回的字符串会拼接在 target 后，拼接结果才是真正的访问地址
+};
+app.use(
+  createProxyMiddleware(filter, {
+    pathRewrite,
+    target: 'https://search.douban.com/movie/subject_search',
+    changeOrigin: true
+  })
+);
 
 app.get('/', (req, res) => {
   const list = [
