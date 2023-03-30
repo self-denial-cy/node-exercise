@@ -1,4 +1,4 @@
-- [ ] Buffer
+- [x] Buffer
 - [ ] File system
 - [ ] OS
 - [ ] Puppeteer
