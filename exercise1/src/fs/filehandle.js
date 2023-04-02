@@ -6,6 +6,25 @@ const fs = require('fs').promises;
    * path <string> | <Buffer> | <URL>
    * flags <string> | <number> 默认值 'r'【打开文件进行读取，如果文件不存在，则会发生异常】
    * mode <string> | <integer> 默认值 0o666【可读可写】
+   * flags 的相关常量：
+   * O_RDONLY 指示打开文件以进行只读访问的标志
+   * O_WRONLY 指示打开文件以进行只写访问的标志
+   * O_RDWR 指示打开文件以进行读写访问的标志
+   * O_CREAT 如果文件不存在则指示创建文件的标志
+   * O_EXCL 如果设置了 O_CREAT 标志并且文件已经存在，则指示打开文件应该失败的标志
+   * O_NOCTTY 标志表示如果路径标识一个终端设备，打开路径不应导致该终端成为进程的控制终端（如果进程还没有一个）
+   * O_TRUNC 标志表示如果文件存在并且是一个普通文件，并且该文件被成功打开以进行写访问，则其长度应被截断为零
+   * O_APPEND 指示数据将追加到文件末尾的标志
+   * O_DIRECTORY 如果路径不是目录，则表示打开应该失败的标志
+   * O_NOATIME 指示对文件系统的读取访问的标志将不再导致与文件关联的 atime 信息的更新。 此标志仅在 Linux 操作系统上可用
+   * O_NOFOLLOW 如果路径是符号链接，则表示打开应该失败的标志
+   * O_SYNC 指示文件为同步 I/O 打开的标志，写操作等待文件完整性
+   * O_DSYNC 指示文件为同步 I/O 打开的标志，写操作等待数据完整性
+   * O_SYMLINK 指示打开符号链接本身而不是它指向的资源的标志
+   * O_DIRECT 设置后，将尝试最小化文件 I/O 的缓存影响
+   * O_NONBLOCK 指示在可能的情况下以非阻塞模式打开文件的标志
+   * UV_FS_O_FILEMAP 设置后，将使用内存文件映射来访问文件。 此标志仅在 Windows 操作系统上可用。 在其他操作系统上，此标志被忽略
+   * 在 Windows 上，只有 O_APPEND、O_CREAT、O_EXCL、O_RDONLY、O_RDWR、O_TRUNC、O_WRONLY 和 UV_FS_O_FILEMAP 可用
    */
   const filehandle = await fs.open('./data.json', 'r+');
 
@@ -145,6 +164,31 @@ const fs = require('fs').promises;
    * 异步读取文件的全部内容，如果在调用 readFile 之前，已经调用过 read 方法，将会从文件当前位置向后读取直到文件末尾【该方法并不总是从文件开头读取】
    */
   // console.log(await filehandle.readFile({ encoding: 'utf8' }));
+
+  /**
+   * filehandle.truncate(len)
+   * len 默认值 0
+   * 截断文件，如果文件大于 len 个字节，则仅前 len 个字节将保留在文件中
+   * 如果文件本就小于 len 个字节，则将其扩展，扩展部分使用空字节填充
+   */
+  // await filehandle.truncate(10);
+
+  /**
+   * filehandle.write(buffer, offset[, length[, position]])
+   * buffer <Buffer> | <TypedArray> | <DataView>
+   * offset 要开始写入数据的 buffer 的起始位置
+   * length 要从 buffer 写入的字节数，默认值 buffer.byteLength - offset
+   * position 要写入来自 buffer 的数据的文件的开头偏移量，如果 position 为 null 或 0，则数据将被写入文件的当前位置
+   * 在 Linux 上，以追加模式【 a+ 】打开文件时，位置写入不起作用。 内核会忽略位置参数，并始终将数据追加到文件末尾
+   */
+
+  /**
+   * filehandle.writeFile(data, options)
+   * data <string> | <Buffer> | <TypedArray> | <DataView> | <AsyncIterable> | <Iterable> | <Stream>
+   * options.encoding 当 data 为字符串时的预期字符编码，默认值 utf8
+   * 异步地将数据写入文件，如果文件已经存在，则替换该文件
+   * 如果在进行 writeFile 之前已经调用过多次 write，则数据将从文件的当前位置写入，直到文件末尾，因此它并不总是从文件的开头写入
+   */
 
   /**
    * 如果未显式关闭 FileHandle，则它将尝试自动关闭并触发进程警告，从而有助于防止内存泄漏
