@@ -1,9 +1,10 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "precommit": "npm run precommit:exercise1 && npm run precommit:practice1",
+    "precommit": "npm run precommit:exercise1 && npm run precommit:practice1 && npm run precommit:practice2",
     "precommit:exercise1": "lint-staged --cwd exercise1",
     "precommit:practice1": "lint-staged --cwd practice1",
+    "precommit:practice2": "lint-staged --cwd practice2",
     "commitmsg": "validate-commit-msg",
     "preversion": "git pull --tags -f",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
