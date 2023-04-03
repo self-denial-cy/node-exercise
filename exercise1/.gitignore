@@ -5,3 +5,4 @@ package-lock.json
 apidocs
 src/koa/uploads
 src/spider/images
+src/spider/audios
