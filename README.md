@@ -30,22 +30,28 @@ npm run server
 NodeJs 相关知识点简易示例，包括：
 
 - apidoc 根据注释自动生成接口文档
+- buffer 模块的简单示例
 - crypto 模块 hash、hmac 加密和 cipher、decipher 加解密
 - ejs 模板引擎结合 express 使用
 - events 模块的简单示例
 - express 的简单示例，包括获取请求参数、中间件、托管静态资源、路由的匹配规则、JSONP 实现原理、CORS 实现原理等
-- fs 模块的简单示例【待补充】
+- fs 模块的简单示例
 - http 模块的简单示例，包括 NodeJs 环境中不存在跨域请求拦截、结合 cheerio 实现简单的页面数据爬取和处理
 - JWT 认证和 Session 认证【session 对象存储在 mongodb 中而不是内存中】
 - koa 的简单示例，包括获取请求参数、托管静态资源、模板引擎、Session 认证、路由配置、结合 @koa/multer 实现文件上传【洋葱模型待补充】
 - commonjs 模块化规范
 - 使用 mongoose 操作 mongodb
 - 使用 mysql 操作 MySQL 数据库
+- os 模块的简单示例
 - path 模块的简单示例
 - process 全局对象的简单示例
+- puppeteer 工具的简单示例【[中文文档](https://puppeteer.bootcss.com)】
+  - [puppeteer-deep](https://github.com/zhentaoo/puppeteer-deep)
+  - [puppeteer-examples](https://github.com/checkly/puppeteer-examples)
 - querystring 模块的简单示例
 - readline 模块的简单示例
 - WebSocket 相关知识点
+- spider 爬虫小实战，包括爬取音乐、表情包、网页数据等
 - stream 流的简单示例
 - URL 类的简单示例
 - zlib 模块的简单示例

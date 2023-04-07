@@ -1,5 +1,5 @@
 - [x] Buffer
 - [x] File system
 - [x] OS
-- [ ] Puppeteer
-- [ ] 爬虫小实战
+- [x] Puppeteer
+- [x] 爬虫小实战
